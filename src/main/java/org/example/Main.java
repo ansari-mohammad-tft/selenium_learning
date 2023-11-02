@@ -78,9 +78,9 @@ public class Main {
         driver.findElement(By.xpath("//div/form/div/div/div[1]/div[4]/div[4]/div[4]/input")).sendKeys("24");
 
 //        I agree check box
-        driver.findElement(By.xpath("/html/body/app-root/ng-component/div/form/div/div/div[3]/div[2]/div/input")).click();
+        driver.findElement(By.xpath("//div/form/div/div/div[3]/div[2]/div/input")).click();
 
-        driver.findElement(By.xpath("/html/body/app-root/ng-component/div/form/div/div/div[3]/div[2]/button")).click();
+        driver.findElement(By.xpath("//div/form/div/div/div[3]/div[2]/button")).click();
     }
 
     public static void set_date(WebDriver driver){
