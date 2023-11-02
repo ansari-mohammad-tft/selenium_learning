@@ -106,12 +106,4 @@ public class Main {
 
     }
 
-    public static boolean clockOut(WebDriver driver) {
-        try {
-            driver.findElement(By.xpath("/html/body/xhr-app-root/div/xhr-home/div/home-dashboard/div/div/div/div/div[2]/div/div[1]/div[6]/home-attendance-clockin-widget/div/div[1]/div/div[2]/div/div[2]/div/div/button"));
-            return false;
-        } catch (Exception e) {
-            return true;
-        }
-    }
 }
