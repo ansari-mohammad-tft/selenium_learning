@@ -65,8 +65,8 @@ public class Main {
         Select drpCountry = new Select(driver.findElement(By.name("state")));
         drpCountry.selectByVisibleText("UTTAR PRADESH");
 //    filling the Passenger  details
-        driver.findElement(By.xpath("//div/form/div/div/div[1]/div[4]/div[3]/div[2]/input")).sendKeys("Passenger x");
-        driver.findElement(By.xpath("//div/form/div/div/div[1]/div[4]/div[4]/div[2]/input")).sendKeys("Passenger x");
+        driver.findElement(By.xpath("//form/div[1]/div[4]/div[3]/div[2]/input")).sendKeys("Passenger x");
+        driver.findElement(By.xpath("//form/div[1]/div[4]/div[4]/div[2]/input")).sendKeys("Passenger x");
 //        select gender
         List<WebElement> gender = driver.findElements(By.name("select"));
         Select gender1= new Select(gender.get(0));
