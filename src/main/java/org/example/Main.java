@@ -23,7 +23,7 @@ public class Main {
         String WEBURL = "https://irctc.co.in/";
         driver.get(WEBURL);
         driver.manage().window().maximize() ;
-        WebElement busIcon = driver.findElement(By.xpath("//div/div/div[10]/div/ul/li[5]/a/span"));
+        WebElement busIcon = driver.findElement(By.xpath("//div[10]/div/ul/li[5]/a/span"));
         busIcon.click();
         ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
@@ -39,26 +39,26 @@ public class Main {
         WebElement date = driver.findElement(By.xpath("//div[3]/div[2]/div[2]/form/div[3]/input"));
         date.click();
         driver.manage().timeouts().implicitlyWait(2,TimeUnit.SECONDS) ;
-        set_date(driver);
+        set_date(driver,15);
         driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS) ;
         driver.findElement(By.xpath("//div[3]/div[2]/div[2]/form/div[4]/button")).click();
 //        select seat
-        driver.findElement(By.xpath("//div/div/div/div[3]/div[3]/div[1]/div[7]/button")).click();
+        driver.findElement(By.xpath("//div[3]/div[3]/div[1]/div[7]/button")).click();
         driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS) ;
-        driver.findElement(By.xpath("//div/div/div/div[3]/div[3]/div[5]/div/div/div[2]/div/div/div/div/table/tbody/tr[1]/td[1]/input")).click();
-        driver.findElement(By.xpath("//div/div/div/div[3]/div[3]/div[5]/div/div/div[2]/div/div/div/div/table/tbody/tr[1]/td[1]/input")).click();
-        driver.findElement(By.xpath("//div/div/div/div[3]/div[3]/div[5]/div/div/div[2]/div/div/div/div/table/tbody/tr[1]/td[1]/input")).click();
+        driver.findElement(By.xpath("//div[3]/div[3]/div[5]/div[2]/table/tbody/tr[1]/td[1]/input")).click();
+        driver.findElement(By.xpath("//div[3]/div[3]/div[5]/div[2]/table/tbody/tr[1]/td[1]/input")).click();
+        driver.findElement(By.xpath("//div[3]/div[3]/div[5]/div[2]/table/tbody/tr[1]/td[1]/input")).click();
 
 
-        driver.findElement(By.xpath("//div/div/div/div[3]/div[3]/div[5]/div/div/div[1]/div/div/div/div[2]/div[4]/span[6]")).click();
-        driver.findElement(By.xpath("//div/div/div/div[3]/div[3]/div[5]/div/div/div[1]/div/div/div/div[2]/div[5]/span[6]")).click();
+        driver.findElement(By.xpath("//div[3]/div[3]/div[5]/div[1]/div[2]/div[4]/span[6]")).click();
+        driver.findElement(By.xpath("//div[3]/div[3]/div[5]/div[1]/div[2]/div[5]/span[6]")).click();
 
-        driver.findElement(By.xpath("//div/div/div/div[3]/div[3]/div[5]/div/div/div[2]/div[2]/div[4]/button")).click();
+        driver.findElement(By.xpath("//div[3]/div[3]/div[5]/div[2]/div[2]/div[4]/button")).click();
 //        login
-        driver.findElement(By.xpath("//app-login/div/div/div/div/div/div[1]/div/form/div[1]/input")).sendKeys("username");
-        driver.findElement(By.xpath("//app-login/div/div/div/div/div/div[1]/div/form/div[2]/input")).sendKeys("password");
+        driver.findElement(By.xpath("//app-login/div[1]/div/form/div[1]/input")).sendKeys("username");
+        driver.findElement(By.xpath("//app-login/div/div[1]/form/div[2]/input")).sendKeys("password");
 
-        driver.findElement(By.xpath("//app-login/div/div/div/div/div/div[1]/div/form/div[3]/button")).click();
+        driver.findElement(By.xpath("//app-login/div[1]/form/div[3]/button")).click();
         driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS) ;
 
 //        select state
@@ -74,20 +74,20 @@ public class Main {
         Select gender2= new Select(gender.get(1));
         gender2.selectByValue("M");
 //        fill age
-        driver.findElement(By.xpath("//div/form/div/div/div[1]/div[4]/div[3]/div[4]/input")).sendKeys("24");
-        driver.findElement(By.xpath("//div/form/div/div/div[1]/div[4]/div[4]/div[4]/input")).sendKeys("24");
+        driver.findElement(By.xpath("//div/form/div[1]/div[4]/div[3]/div[4]/input")).sendKeys("24");
+        driver.findElement(By.xpath("//div/form/div[1]/div[4]/div[4]/div[4]/input")).sendKeys("24");
 
 //        I agree check box
-        driver.findElement(By.xpath("//div/form/div/div/div[3]/div[2]/div/input")).click();
+        driver.findElement(By.xpath("//div/form/div[3]/div[2]/div/input")).click();
 
-        driver.findElement(By.xpath("//div/form/div/div/div[3]/div[2]/button")).click();
+        driver.findElement(By.xpath("//div/form/div[3]/div[2]/button")).click();
     }
 
-    public static void set_date(WebDriver driver){
+    public static void set_date(WebDriver driver,int days){
         LocalDate currentDate = LocalDate.now(); // November 10, 2023
 
         // Calculate the target date (15 days from the current date)
-        LocalDate targetDate = currentDate.plusDays(15);
+        LocalDate targetDate = currentDate.plusDays(days);
 
         // Format the target date in the expected date format (if needed)
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d"); // Adjust the format as per the date picker on the website
