@@ -110,9 +110,7 @@ public class assigment3 {
             writer.writeNext(record1);
 
 
-            // You can also write a list of records at once
-            // List<String[]> records = Arrays.asList(record1, record2);
-            // writer.writeAll(records);
+
 
         } catch (IOException e) {
             e.printStackTrace();
