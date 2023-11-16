@@ -1,8 +1,15 @@
 package org.example;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-
+import com.opencsv.CSVWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 public class assigment3 {
@@ -13,25 +20,28 @@ public class assigment3 {
         driver.get(WEBURL);
         driver.manage().window().maximize() ;
 //        search icon
+
         driver.findElement(By.xpath("//div[3]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[2]/div[3]/div/div/div")).click();
 
         uploadFile(driver,"/home/ehsan/Downloads/download.jpeg");
+
         driver.findElement(By.className("mui-t7xql4-a-inherit-link")).click();
         scrollDown(driver);
         String photoID = getPhotoId(driver);
-
+        addInCsv("/home/ehsan/Downloads/PhotoID.cvs",photoID);
         scrollUp(driver);
         driver.findElement(By.className("mui-o90xvh-a-inherit-logo")).click();
-        Thread.sleep(1000);
+
         driver.findElement(By.xpath("//div[1]/div[3]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[2]/div[2]/div[2]/div/div/input")).sendKeys(photoID);
         driver.findElement(By.xpath("//div[1]/div[3]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[2]/div[3]/button")).click();
-        Thread.sleep(5000);
-        driver.findElement(By.xpath("/html/body/div[1]/div[3]/div/div/div[1]/div[2]/div[1]/div/div/div[1]/div[1]/div/div[2]/div/button")).click();
-        Thread.sleep(2000);
 
-        driver.findElement(By.xpath("/html/body/div[11]/div[3]/div[2]/div[2]/button")).click();
+        driver.findElement(By.xpath("//div[1]/div[3]/div/div/div[1]/div[2]/div[1]/div/div/div[1]/div[1]/div/div[2]/div/button")).click();
+
+
+        driver.findElement(By.xpath("//div[12]/div[3]/div[2]/div[2]/button")).click();
         Login("","",driver);
-
+        addInCsv("/home/ehsan/Downloads/PhotoID.cvs",photoID);
+        takeScreenShot(driver,"/home/ehsan/Downloads/");
     }
 
 
@@ -63,6 +73,50 @@ public class assigment3 {
         driver.findElement(By.xpath("//div[2]/div/form/div[2]/div[1]/span[1]/div/div/input")).sendKeys(username);
         driver.findElement(By.xpath("//div[2]/div/form/div[2]/div[1]/span[2]/div/div/input")).sendKeys(password);
         driver.findElement(By.xpath("//div[2]/div/form/div[2]/div[2]/div[1]/span/button")).click();
+    }
+    static public void  takeScreenShot(WebDriver driver,String Path){
+        try {
+
+            File source = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            String path = Path + source.getName();
+            FileUtils.copyFile(source, new File(path));
+        }
+        catch(IOException e) {
+            System.out.println(e.toString());
+        }
+
+    }
+    public static void addInCsv(String csvFilePath,String id){
+
+
+        // Check if the file exists, create it if not
+        Path path = Paths.get(csvFilePath);
+
+        if (!Files.exists(path)) {
+            try {
+                Files.createFile(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try (CSVWriter writer = new CSVWriter(new FileWriter(csvFilePath))) {
+
+            // Writing data to CSV file
+            String[] record1 = {id};
+
+
+            // Writing individual records
+            writer.writeNext(record1);
+
+
+            // You can also write a list of records at once
+            // List<String[]> records = Arrays.asList(record1, record2);
+            // writer.writeAll(records);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
