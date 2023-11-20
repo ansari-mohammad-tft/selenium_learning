@@ -20,8 +20,8 @@ public class assigment3 {
         driver.get(WEBURL);
         driver.manage().window().maximize() ;
 //        search icon
-
-        driver.findElement(By.xpath("//div[3]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[2]/div[3]/div/div/div")).click();
+        String searchByImageXpath="//div[@class=\"MuiBox-root mui-1i4x3e6-root\"]/button";
+        driver.findElement(By.xpath(searchByImageXpath)).click();
 
         uploadFile(driver,"/home/ehsan/Downloads/download.jpeg");
 
@@ -31,14 +31,14 @@ public class assigment3 {
         addInCsv("/home/ehsan/Downloads/PhotoID.cvs",photoID);
         scrollUp(driver);
         driver.findElement(By.className("mui-o90xvh-a-inherit-logo")).click();
+        Thread.sleep(10000);
+        driver.findElement(By.xpath("//div/input")).sendKeys(photoID);
+        driver.findElement(By.xpath("//div/button[@aria-label=\"Search\"]")).click();
+        Thread.sleep(10000);
+        driver.findElement(By.xpath("//div/button[@aria-label=\"Download\"]")).click();
 
-        driver.findElement(By.xpath("//div[1]/div[3]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[2]/div[2]/div[2]/div/div/input")).sendKeys(photoID);
-        driver.findElement(By.xpath("//div[1]/div[3]/div/div[2]/div[1]/div/div[1]/div/div[1]/div[2]/div[3]/button")).click();
-
-        driver.findElement(By.xpath("//div[1]/div[3]/div/div/div[1]/div[2]/div[1]/div/div/div[1]/div[1]/div/div[2]/div/button")).click();
-
-
-        driver.findElement(By.xpath("//div[12]/div[3]/div[2]/div[2]/button")).click();
+        Thread.sleep(10000);
+        driver.findElement(By.xpath("//div/button[@aria-label=\"Buy and download\"]")).click();
         Login("","",driver);
         addInCsv("/home/ehsan/Downloads/PhotoID.cvs",photoID);
         takeScreenShot(driver,"/home/ehsan/Downloads/");
@@ -47,7 +47,7 @@ public class assigment3 {
 
 
     private static String getPhotoId(WebDriver driver) {
-        String imageID = driver.findElement(By.xpath("//div[3]/div/div/div[1]/div[2]/div[2]/div/div[1]/div/div[1]/div/div/div/div[1]/div[1]/p")).getText();
+        String imageID = driver.findElement(By.xpath("//div[@class=\"MuiBox-root mui-15jx5nt\"]/p")).getText();
         String id = imageID.split("ID:")[1];
 //        System.out.println(id);
         return id;
@@ -68,11 +68,12 @@ public class assigment3 {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(350,0)", "");
     }
-    public static void Login(String username, String password,WebDriver driver){
-        driver.findElement(By.xpath("//div[2]/div/form/div[3]/span/p/a")).click();
-        driver.findElement(By.xpath("//div[2]/div/form/div[2]/div[1]/span[1]/div/div/input")).sendKeys(username);
-        driver.findElement(By.xpath("//div[2]/div/form/div[2]/div[1]/span[2]/div/div/input")).sendKeys(password);
-        driver.findElement(By.xpath("//div[2]/div/form/div[2]/div[2]/div[1]/span/button")).click();
+    public static void Login(String username, String password,WebDriver driver) throws InterruptedException {
+        Thread.sleep(10000);
+        driver.findElement(By.xpath("//a[@data-test-id=\"login-link\"]")).click();
+        driver.findElement(By.id("//input[@name=\"username\"]")).sendKeys(username);
+        driver.findElement(By.xpath("//input[@data-test-id=\"password-input\"]")).sendKeys(password);
+        driver.findElement(By.xpath("//button[@data-test-id=\"login-form-submit-button\"]")).click();
     }
     static public void  takeScreenShot(WebDriver driver,String Path){
         try {
