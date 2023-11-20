@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 //        WebElement clockout = driver.findElement(By.xpath(CLOCK_OUT_BUTTON));
         System.setProperty("webdriver.chrome.driver", "/home/ehsan/Downloads/chromedriver-linux64/chromedriver");
         WebDriver driver = new ChromeDriver();
@@ -39,24 +39,27 @@ public class Main {
         WebElement date = driver.findElement(By.xpath("//div[3]/div[2]/div[2]/form/div[3]/input"));
         date.click();
         driver.manage().timeouts().implicitlyWait(2,TimeUnit.SECONDS) ;
-        set_date(driver,15);
+        set_date(driver,5);
         driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS) ;
+//        submit button
         driver.findElement(By.xpath("//div[3]/div[2]/div[2]/form/div[4]/button")).click();
-//        select seat
+
         driver.findElement(By.xpath("//div[3]/div[3]/div[1]/div[7]/button")).click();
         driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS) ;
-        driver.findElement(By.xpath("//div[3]/div[3]/div[5]/div[2]/table/tbody/tr[1]/td[1]/input")).click();
-        driver.findElement(By.xpath("//div[3]/div[3]/div[5]/div[2]/table/tbody/tr[1]/td[1]/input")).click();
-        driver.findElement(By.xpath("//div[3]/div[3]/div[5]/div[2]/table/tbody/tr[1]/td[1]/input")).click();
+//boarding point
+        driver.findElement(By.xpath("//div[@id=\"myTabContent\"]//td/input")).click();
+        //droping point
+        driver.findElement(By.xpath("//div[@id=\"myTabContent\"]//td/input")).click();
 
 
-        driver.findElement(By.xpath("//div[3]/div[3]/div[5]/div[1]/div[2]/div[4]/span[6]")).click();
-        driver.findElement(By.xpath("//div[3]/div[3]/div[5]/div[1]/div[2]/div[5]/span[6]")).click();
+//        seats
 
-        driver.findElement(By.xpath("//div[3]/div[3]/div[5]/div[2]/div[2]/div[4]/button")).click();
+        select_seats(driver,21,22);
+        Thread.sleep(1000);
+        driver.findElement(By.xpath("//div[@class=\"d-block text-center mt-2 mb-1\"]/button")).click();
 //        login
-        driver.findElement(By.xpath("//app-login/div[1]/div/form/div[1]/input")).sendKeys("username");
-        driver.findElement(By.xpath("//app-login/div/div[1]/form/div[2]/input")).sendKeys("password");
+        driver.findElement(By.xpath("//input[@id=\"loginuserid\"]")).sendKeys("username");
+        driver.findElement(By.xpath("//input[@id=\"pwd\"]")).sendKeys("password");
 
         driver.findElement(By.xpath("//app-login/div[1]/form/div[3]/button")).click();
         driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS) ;
@@ -65,8 +68,9 @@ public class Main {
         Select drpCountry = new Select(driver.findElement(By.name("state")));
         drpCountry.selectByVisibleText("UTTAR PRADESH");
 //    filling the Passenger  details
-        driver.findElement(By.xpath("//form/div[1]/div[4]/div[3]/div[2]/input")).sendKeys("Passenger x");
-        driver.findElement(By.xpath("//form/div[1]/div[4]/div[4]/div[2]/input")).sendKeys("Passenger x");
+        List<WebElement> name = driver.findElements(By.xpath("//input[@placeholder=\"Traveller Name\"]"));
+        name.get(0).sendKeys("Passenger x");
+        name.get(1).sendKeys("Passenger x");
 //        select gender
         List<WebElement> gender = driver.findElements(By.name("select"));
         Select gender1= new Select(gender.get(0));
@@ -74,8 +78,12 @@ public class Main {
         Select gender2= new Select(gender.get(1));
         gender2.selectByValue("M");
 //        fill age
-        driver.findElement(By.xpath("//div/form/div[1]/div[4]/div[3]/div[4]/input")).sendKeys("24");
-        driver.findElement(By.xpath("//div/form/div[1]/div[4]/div[4]/div[4]/input")).sendKeys("24");
+        List<WebElement> age = driver.findElements(By.xpath("//input[@placeholder=\"Age\"]"));
+//
+        age.get(0).sendKeys("24");
+        age.get(1).sendKeys("24");
+
+
 
 //        I agree check box
         driver.findElement(By.xpath("//div/form/div[3]/div[2]/div/input")).click();
@@ -83,6 +91,12 @@ public class Main {
         driver.findElement(By.xpath("//div/form/div[3]/div[2]/button")).click();
     }
 
+    public static void select_seats(WebDriver driver,int seat1,int seat2) throws InterruptedException {
+
+        driver.findElement(By.xpath("//div[@class=\"lowerdeck-seat-wrap\"]/span[contains(@title, \"Seat No. : "+seat1+"\")]")).click();
+
+        driver.findElement(By.xpath("//div[@class=\"lowerdeck-seat-wrap\"]/span[contains(@title, \"Seat No. : "+seat2+"\")]")).click();
+    }
     public static void set_date(WebDriver driver,int days){
         LocalDate currentDate = LocalDate.now(); // November 10, 2023
 
