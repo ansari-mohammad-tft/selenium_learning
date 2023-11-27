@@ -54,7 +54,8 @@ public class Main {
 
 //        seats
 
-        select_seats(driver,21,22);
+        select_seats(driver,21);
+        select_seats(driver,22);
         Thread.sleep(1000);
         driver.findElement(By.xpath("//div[@class=\"d-block text-center mt-2 mb-1\"]/button")).click();
 //        login
@@ -91,11 +92,9 @@ public class Main {
         driver.findElement(By.xpath("//div/form/div[3]/div[2]/button")).click();
     }
 
-    public static void select_seats(WebDriver driver,int seat1,int seat2) throws InterruptedException {
+    public static void select_seats(WebDriver driver,int seat) throws InterruptedException {
 
-        driver.findElement(By.xpath("//div[@class=\"lowerdeck-seat-wrap\"]/span[contains(@title, \"Seat No. : "+seat1+"\")]")).click();
-
-        driver.findElement(By.xpath("//div[@class=\"lowerdeck-seat-wrap\"]/span[contains(@title, \"Seat No. : "+seat2+"\")]")).click();
+        driver.findElement(By.xpath("//div[@class=\"lowerdeck-seat-wrap\"]/span[contains(@title, \"Seat No. : "+seat+"\")]")).click();
     }
     public static void set_date(WebDriver driver,int days){
         LocalDate currentDate = LocalDate.now(); // November 10, 2023
